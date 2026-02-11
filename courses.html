@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bit por Bit - Cursos</title>
+    <!-- GSAP from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/static/img/owl.png">
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+
+<body>
+    <!-- Fixed Navbar -->
+    <div class="navbar">
+        <a href="index.html" class="logo" id="logo-link">
+            <div class="logo-letter">B</div>
+            <div class="logo-letter">X</div>
+            <div class="logo-letter">B</div>
+        </a>
+
+        <div class="nav-links" id="nav-links">
+            <a href="index.html" id="home-link">Inicio</a>
+            <a href="courses.html" id="cursos-link" class="active">Cursos</a>
+            <a href="about.html" id="about-link">Sobre Nosotros</a>
+        </div>
+        <a href="login.html" class="login-btn">Iniciar Sesión</a>
+
+
+        <button class="menu-button" id="menu-btn">☰</button>
+    </div>
+
+    <!-- Pages Container -->
+    <div class="pages-container">
+        <!-- Cursos Page -->
+        <div id="cursos-page" class="page active">
+            <div class="cursos-container">
+                <!-- Cursos Header -->
+                <div class="cursos-header">
+                    <div class="cursos-image-container">
+                        <video id="cursos-video" muted>
+                            <source src="/static/img/video2.mp4" type="video/mp4">
+                        </video>
+                    </div>
+
+                    <div class="cursos-text">
+                        <h2 class="cursos-title">Cursos para todos los niveles</h2>
+                        <p>Nos esforzamos para que cada alumno pueda tomar nuestros cursos a su propio ritmo y nivel</p>
+                    </div>
+                </div>
+
+                <h2 class="section-title">Ofrecemos los siguientes Cursos</h2>
+
+                <!-- Enhanced Course Carousel -->
+                <!-- Course Navigation -->
+                <div class="course-navigation">
+                    <div class="course-tabs" id="course-tabs">
+                        <div class="course-tab active" data-course="python">Python</div>
+                        <div class="course-tab" data-course="java">Java</div>
+                        <div class="course-tab" data-course="javascript">JavaScript</div>
+                        <div class="course-tab" data-course="go">Go</div>
+                        <div class="course-tab" data-course="html">HTML</div>
+                        <div class="course-tab" data-course="css">CSS</div>
+                        <div class="course-tab" data-course="sql">SQL</div>
+                        <div class="course-tab" data-course="react">React</div>
+                    </div>
+
+                    <!-- Course Details Section (keep this as is) -->
+                    <div class="course-details-section" id="course-details">
+                        <div class="course-details-container">
+                            <div class="course-details-header">
+                                <div class="course-logo-large">
+                                    <img id="detail-logo" src="/static/img/phyton.png" alt="Course logo" width="120"
+                                        height="120">
+                                </div>
+                                <div class="course-details-info">
+                                    <h3 id="detail-title">Python</h3>
+                                    <span id="detail-level" class="course-level-badge">Principiante</span>
+                                </div>
+                            </div>
+                            <div class="course-details-content">
+                                <div class="course-description">
+                                    <h4>Descripción</h4>
+                                    <p id="detail-description">Este curso ofrece las bases necesarias de Python</p>
+                                </div>
+                                <div class="course-features">
+                                    <div class="feature">
+                                        <span class="feature-icon">⏱️</span>
+                                        <div class="feature-text">
+                                            <span class="feature-label">Duración:</span>
+                                            <span id="detail-duration">3 horas</span>
+                                        </div>
+                                    </div>
+                                    <div class="feature">
+                                        <span class="feature-icon">📚</span>
+                                        <div class="feature-text">
+                                            <span class="feature-label">Módulos:</span>
+                                            <span id="detail-modules">5 módulos</span>
+                                        </div>
+                                    </div>
+                                    <div class="feature">
+                                        <span class="feature-icon">🧑‍💻</span>
+                                        <div class="feature-text">
+                                            <span class="feature-label">Proyectos:</span>
+                                            <span id="detail-projects">2 proyectos</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="course-cta">
+                                <button class="enroll-button">Saber más</button>
+                                <!--button class="more-info-button">Saber más</button-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer
+        style="background-color: #f8f9fa; padding: 20px 0; border-top: 1px solid #e9ecef; font-family: Arial, sans-serif; font-size: 14px; color: #6c757d; margin-top: 40px;">
+        <div
+            style="max-width: 1200px; margin: 0 auto; padding: 0 15px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
+            <div style="margin-bottom: 10px;">
+                <p style="margin: 0;">©Todos los derechos reservados bit por bit</p>
+                <p style="margin: 5px 0 0 0;">Bit x Bit S.A. de C.V</p>
+            </div>
+            <div style="margin-bottom: 10px;">
+                <p style="margin: 0;">
+                    <a href="https://www.flaticon.com/free-icons/owl" title="owl icons"
+                        style="color: #6c757d; text-decoration: none;">Owl icons created by Laisa Islam Ani -
+                        Flaticon</a>
+                </p>
+            </div>
+            <div style="margin-bottom: 10px; text-align: right;">
+                <p style="margin: 0;">Contacto: info@bitxbit.mx</p>
+                <p style="margin: 5px 0 0 0;">Tel: +52 (55) 1234-5678</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- JavaScript for animations and functionality -->
+    <script src="/static/js/index.js"></script>
+    <script>
+        // Update the document ready function
+        document.addEventListener('DOMContentLoaded', function () {
+            // Specific cursos page initialization
+            animateCursosPage();
+
+            // Initialize navbar animations
+            animateNavbar();
+
+            // Initialize course details with tabs
+            initCourseDetails();
+
+            // Fix header text explicitly
+            fixHeaderText();
+        });
+    </script>
+</body>
+
+</html>

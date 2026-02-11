@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bit por Bit - Sobre Nosotros</title>
+    <!-- GSAP from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/static/img/owl.png">
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+
+<body>
+    <!-- Fixed Navbar -->
+    <div class="navbar">
+        <a href="index.html" class="logo" id="logo-link">
+            <div class="logo-letter">B</div>
+            <div class="logo-letter">X</div>
+            <div class="logo-letter">B</div>
+        </a>
+
+        <div class="nav-links">
+            <a href="index.html" id="home-link">Inicio</a>
+            <a href="courses.html" id="cursos-link">Cursos</a>
+            <a href="about.html" id="about-link" class="active">Sobre Nosotros</a>
+        </div>
+        <a href="login.html" class="login-btn">Iniciar Sesión</a>
+
+        <button class="menu-button" id="menu-btn">☰</button>
+    </div>
+
+    <!-- Pages Container -->
+    <div class="pages-container">
+        <!-- Sobre Nosotros Page -->
+        <div id="about-page" class="page active">
+            <div class="about-container">
+                <!-- Vision Section -->
+                <section class="about-section">
+                    <div class="about-content">
+                        <div class="about-text">
+                            <h2 class="about-title">Nuestra Visión</h2>
+                            <p class="about-description">
+                                Ser la herramienta principal de apoyo educativo dentro de las escuelas,
+                                promoviendo el aprendizaje autónomo, el desarrollo de habilidades clave y la
+                                excelencia académica a través de soluciones digitales accesibles y actualizaciones
+                                constantes en material educativo para todos los estudiantes.
+                            </p>
+                        </div>
+                        <div class="about-image-container">
+                            <img src="/static/img/image1.jpg" alt="Imagen de nuestra visión" class="about-image">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Mision Section -->
+                <section class="about-section">
+                    <div class="about-content reverse">
+                        <div class="about-image-container">
+                            <img src="/static/img/image2.jpg" alt="Imagen de nuestra misión" class="about-image">
+                        </div>
+                        <div class="about-text">
+                            <h2 class="about-title">Nuestra Misión</h2>
+                            <p class="about-description">
+                                Proporcionar una plataforma educativa siempre actualizada a los cambios y
+                                tendencias del mercado que permita a los alumnos de la Universidad acceder a cursos
+                                en línea diseñados para reforzar y complementar los aprendizajes obtenidos en
+                                clases.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Valores Section -->
+                <section class="about-section">
+                    <div class="about-content">
+                        <div class="about-text">
+                            <h2 class="about-title">Nuestros Valores</h2>
+                            <ul class="values-list">
+                                <li><strong>Accesibilidad:</strong> Garantizar que todos los estudiantes tengan acceso a
+                                    recursos educativos en línea.</li>
+                                <li><strong>Ofrecer contenidos educativos</strong> de alto nivel diseñados por expertos
+                                    de la escuela.</li>
+                                <li><strong>Innovación:</strong> Implementar tecnologías modernas para mejorar la
+                                    experiencia de aprendizaje.</li>
+                                <li><strong>Inclusión:</strong> Diseñar cursos que atiendan diferentes estilos y ritmos
+                                    de aprendizaje.</li>
+                                <li><strong>Compromiso:</strong> Apoyar el desarrollo integral de los estudiantes con
+                                    una plataforma confiable y efectiva.</li>
+                            </ul>
+                        </div>
+                        <div class="about-image-container">
+                            <img src="/static/img/image3.jpg" alt="Imagen de nuestros valores" class="about-image">
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <footer
+        style="background-color: #f8f9fa; padding: 20px 0; border-top: 1px solid #e9ecef; font-family: Arial, sans-serif; font-size: 14px; color: #6c757d; margin-top: 40px;">
+        <div
+            style="max-width: 1200px; margin: 0 auto; padding: 0 15px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
+            <div style="margin-bottom: 10px;">
+                <p style="margin: 0;">©Todos los derechos reservados bit por bit</p>
+                <p style="margin: 5px 0 0 0;">Bit x Bit S.A. de C.V</p>
+            </div>
+            <div style="margin-bottom: 10px;">
+                <p style="margin: 0;">
+                    <a href="https://www.flaticon.com/free-icons/owl" title="owl icons"
+                        style="color: #6c757d; text-decoration: none;">Owl icons created by Laisa Islam Ani -
+                        Flaticon</a>
+                </p>
+            </div>
+            <div style="margin-bottom: 10px; text-align: right;">
+                <p style="margin: 0;">Contacto: info@bitxbit.mx</p>
+                <p style="margin: 5px 0 0 0;">Tel: +52 (55) 1234-5678</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- JavaScript for animations and functionality -->
+    <script src="/static/js/index.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Animate navbar
+            animateNavbar();
+
+            // Initialize about page animations
+            animateAboutPage();
+        });
+
+        // Function to animate about page elements
+        function animateAboutPage() {
+            const aboutSections = document.querySelectorAll('.about-section');
+
+            aboutSections.forEach((section, index) => {
+                const title = section.querySelector('.about-title');
+                const description = section.querySelector('.about-description');
+                const imageContainer = section.querySelector('.about-image-container');
+                const valuesList = section.querySelector('.values-list');
+
+                // Reset animations
+                gsap.set(title, { opacity: 0, y: -30 });
+                gsap.set(description || valuesList, { opacity: 0, y: 20 });
+                gsap.set(imageContainer, { opacity: 0, scale: 0.9 });
+
+                // Create timeline for each section
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 80%",
+                        end: "bottom 20%",
+                        toggleActions: "play none none none"
+                    },
+                    defaults: { ease: "power3.out" }
+                });
+
+                // Animate elements
+                tl.to(title, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                });
+
+                tl.to(description || valuesList, {
+                    y: 0,
+                    opacity: 1,
+                    duration: 0.8,
+                }, "-=0.5");
+
+                tl.to(imageContainer, {
+                    opacity: 1,
+                    scale: 1,
+                    duration: 0.8,
+                }, "-=0.5");
+            });
+        }
+    </script>
+</body>
+
+</html>

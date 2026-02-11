@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bit por Bit - Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="/static/img/owl.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="/static/js/monitor.js" defer></script>
+    <link rel="stylesheet" href="/static/css/studentdash.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fas fa-code"></i> Bit por Bit
+        </div>
+        <a href="#" class="menu-item active" id="inicio-link" data-section="estudiantes">
+            <i class="fa-solid fa-user-graduate"></i> Estudiantes
+        </a>
+        <a href="#" class="menu-item" id="mis-cursos-link" data-section="administrativos">
+            <i class="fa-solid fa-user-tie"></i> Administrativos
+        </a>
+        <a href="#" class="menu-item" id="cursos-disponibles-link" data-section="monitorear">
+            <i class="fa-solid fa-laptop-code"></i> Monitorear
+        </a>
+        <a href="#" class="menu-item" id="mis-certificados-link" data-section="analisis">
+            <i class="fa-solid fa-chart-simple"></i> Análisis
+        </a>
+        <a href="#" class="menu-item" id="mi-perfil-link" data-section="mi-perfil">
+            <i class="fa-solid fa-user"></i> Perfil
+        </a>
+        <!--a href="#" class="menu-item" id="sobre-nosotros-link" data-section="sobre-nosotros">
+            <i class="fas fa-info-circle"></i> 
+        </a-->
+    </aside>
+ 
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-title">
+                <i class="fa-solid fa-user-graduate"></i> Estudiantes
+            </div>
+            <div class="user-profile" id="user-profile">
+              <span>{{user}}</span>
+                <div class="avatar">U</div>
+                
+                <!-- User Dropdown Menu -->
+                <div class="user-dropdown" id="user-dropdown">
+                    <a href="#" class="user-dropdown-item" id="profile-link">
+                        <i class="fas fa-user-circle"></i> Mi Perfil
+                    </a>
+                    <a href="#" class="user-dropdown-item" id="settings-link">
+                        <i class="fas fa-cog"></i> Ajustes
+                    </a>
+                    <a href="#" class="user-dropdown-item logout" id="logout-link">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                    </a>
+                </div>
+            </div>
+        </header>
+
+
+        <!-- Content Container - This will be filled with HTML from database -->
+        <div class="content-container" id="content-area">
+            <div class="loading">
+                <div class="spinner"></div>
+            </div>
+        </div>
+    </main>
+
+    <script src="/static/js/admindash.js"></script>
+</body>
+</html>
+

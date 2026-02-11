@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitor de Inicios de Sesión en Vivo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #00c1b0;
+            --primary-hover: #00a99d;
+            --text-color: #333;
+            --light-bg: #f5f7fa;
+            --border-color: #e0e5ec;
+            --danger-color: #f56c6c;
+            --danger-bg: #fef0f0;
+            --success-color: #67c23a;
+            --success-bg: #f0f9eb;
+            --info-color: #409eff;
+            --info-bg: #f0f7ff;
+            --header-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+        }
+
+        .container {
+            width: 100%;
+            min-height: 100vh;
+        }
+        
+        .main-content {
+            max-width: 100%;
+            padding: 0;
+        }
+
+        .header {
+            background-color: var(--header-bg);
+            color: var(--text-color);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-title {
+            display: flex;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        .header i {
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .status-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            background-color: white;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+        }
+
+        .status-badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .dot.connected {
+            background-color: var(--success-color);
+        }
+
+        .dot.disconnected {
+            background-color: var(--danger-color);
+        }
+
+        .tabs {
+            display: flex;
+            background-color: white;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+            font-size: 14px;
+        }
+
+        .tab:hover {
+            color: var(--primary-color);
+        }
+
+        .tab.active {
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .content-box {
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            margin: 20px;
+            overflow: hidden;
+        }
+
+        .events-list {
+            max-height: calc(100vh - 220px);
+            overflow-y: auto;
+            padding: 0;
+        }
+
+        .event-item {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-item.error {
+            background-color: var(--danger-bg);
+            border-left: 3px solid var(--danger-color);
+        }
+
+        .event-item.login, .event-item.success {
+            background-color: var(--success-bg);
+            border-left: 3px solid var(--success-color);
+        }
+
+        .event-item.logout, .event-item.info {
+            background-color: var(--info-bg);
+            border-left: 3px solid var(--info-color);
+        }
+
+        .event-item.ws_connection {
+            background-color: #f8f9fa;
+            border-left: 3px solid #6c757d;
+        }
+
+        .event-icon {
+            margin-right: 10px;
+        }
+
+        .event-icon.error {
+            color: var(--danger-color);
+        }
+
+        .event-icon.login, .event-icon.success {
+            color: var(--success-color);
+        }
+
+        .event-icon.logout, .event-icon.info {
+            color: var(--info-color);
+        }
+
+        .event-icon.ws_connection {
+            color: #6c757d;
+        }
+
+        .event-content {
+            flex: 1;
+        }
+
+        .event-timestamp {
+            color: #999;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+
+        .charts-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .chart-box {
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+            padding: 15px;
+        }
+
+        .chart-title {
+            font-size: 14px;
+            margin-bottom: 15px;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn i {
+            margin-right: 6px;
+            color: white;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-clear {
+            background-color: #f5f7fa;
+            color: #606266;
+            border: 1px solid #dcdfe6;
+        }
+
+        .btn-clear:hover {
+            background-color: #e6e8eb;
+            color: #333;
+        }
+
+        .btn-clear i {
+            color: #606266;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            color: #909399;
+        }
+
+        .empty-state i {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <div class="header">
+                <div class="header-title">
+                    <i class="fas fa-desktop"></i>
+                    <h1>Monitor de inicios de sesión en vivo</h1>
+                </div>
+                <div class="header-actions">
+                    <button id="reconnectBtn" class="btn">
+                        <i class="fas fa-sync-alt"></i> Reconectar
+                    </button>
+                    <button id="clearBtn" class="btn btn-clear">
+                        <i class="fas fa-trash-alt"></i> Limpiar
+                    </button>
+                </div>
+            </div>
+
+            <div class="status-wrapper">
+                <div class="status-badge">
+                    <span class="dot disconnected" id="connectionDot"></span>
+                    <span>Estado: <span id="connectionStatus">Desconectado</span></span>
+                </div>
+            </div>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="todos">Todos</div>
+                <div class="tab" data-tab="login">Inicios de sesión</div>
+                <div class="tab" data-tab="logout">Cierres de sesión</div>
+                <div class="tab" data-tab="error">Errores</div>
+                <div class="tab" data-tab="rendimiento">Rendimiento</div>
+            </div>
+            
+            <div id="eventsContainer" class="events-list">
+                <div class="empty-state">
+                    <i class="fas fa-stream"></i>
+                    <p>No hay eventos para mostrar</p>
+                </div>
+            </div>
+            
+            <div id="performanceCharts" class="charts-container" style="display: none;">
+                <div class="chart-box">
+                    <div class="chart-title">Uso de CPU</div>
+                    <canvas id="cpuChart"></canvas>
+                </div>
+                <div class="chart-box">
+                    <div class="chart-title">Uso de Memoria</div>
+                    <canvas id="memoryChart"></canvas>
+                </div>
+                <div class="chart-box">
+                    <div class="chart-title">Número de Procesos</div>
+                    <canvas id="processesChart"></canvas>
+                </div>
+                <div class="chart-box">
+                    <div class="chart-title">Tiempo de Respuesta</div>
+                    <canvas id="responseTimeChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data structures to hold chart data
+const maxDataPoints = 20;
+const chartOptions = {
+    responsive: true,
+    animation: {
+        duration: 0
+    },
+    scales: {
+        y: {
+            beginAtZero: true,
+            grid: {
+                color: 'rgba(0, 0, 0, 0.05)'
+            }
+        },
+        x: {
+            grid: {
+                display: false
+            }
+        }
+    },
+    elements: {
+        point: {
+            radius: 2
+        },
+        line: {
+            tension: 0.3
+        }
+    },
+    plugins: {
+        legend: {
+            display: false
+        }
+    }
+};
+
+const cpuData = {
+    labels: [],
+    datasets: [{
+        label: 'CPU Usage (%)',
+        data: [],
+        borderColor: '#409eff',
+        backgroundColor: 'rgba(64, 158, 255, 0.1)',
+        fill: true
+    }]
+};
+
+const memoryData = {
+    labels: [],
+    datasets: [{
+        label: 'Memory Usage (%)',
+        data: [],
+        borderColor: '#67c23a',
+        backgroundColor: 'rgba(103, 194, 58, 0.1)',
+        fill: true
+    }]
+};
+
+const processesData = {
+    labels: [],
+    datasets: [{
+        label: 'Number of Processes',
+        data: [],
+        borderColor: '#909399',
+        backgroundColor: 'rgba(144, 147, 153, 0.1)',
+        fill: true
+    }]
+};
+
+const responseTimeData = {
+    labels: [],
+    datasets: [{
+        label: 'Response Time (ms)',
+        data: [],
+        borderColor: '#e6a23c',
+        backgroundColor: 'rgba(230, 162, 60, 0.1)',
+        fill: true
+    }]
+};
+
+// Chart configuration
+const chartConfig = {
+    type: 'line',
+    options: chartOptions
+};
+
+// Initialize charts
+let cpuChart, memoryChart, processesChart, responseTimeChart;
+
+function initCharts() {
+    cpuChart = new Chart(
+        document.getElementById('cpuChart').getContext('2d'),
+        {...chartConfig, data: cpuData}
+    );
+    
+    memoryChart = new Chart(
+        document.getElementById('memoryChart').getContext('2d'),
+        {...chartConfig, data: memoryData}
+    );
+    
+    processesChart = new Chart(
+        document.getElementById('processesChart').getContext('2d'),
+        {...chartConfig, data: processesData}
+    );
+    
+    responseTimeChart = new Chart(
+        document.getElementById('responseTimeChart').getContext('2d'),
+        {...chartConfig, data: responseTimeData}
+    );
+}
+
+// Update charts with new data
+function updateChart(chart, data, value) {
+    const now = new Date();
+    const timeString = now.getHours().toString().padStart(2, '0') + ':' + 
+                       now.getMinutes().toString().padStart(2, '0') + ':' + 
+                       now.getSeconds().toString().padStart(2, '0');
+    
+    data.labels.push(timeString);
+    data.datasets[0].data.push(value);
+    
+    if (data.labels.length > maxDataPoints) {
+        data.labels.shift();
+        data.datasets[0].data.shift();
+    }
+    
+    chart.update();
+}
+
+// WebSocket connection
+let socket;
+let reconnectAttempts = 0;
+const maxReconnectAttempts = 10;
+const reconnectInterval = 3000;
+
+function connectWebSocket() {
+    const protocol = window.location.protocol === 'https:' ? 'wss://' : 'ws://';
+    const host = window.location.hostname + (window.location.port ? `:${window.location.port}` : '');
+    socket = new WebSocket(`${protocol}${host}/ws`);
+    
+    socket.onopen = function() {
+        console.log('WebSocket connection established');
+        document.getElementById('connectionStatus').textContent = 'Conectado';
+        document.getElementById('connectionDot').classList.remove('disconnected');
+        document.getElementById('connectionDot').classList.add('connected');
+        reconnectAttempts = 0;
+        
+        // Remove empty state if it exists
+        const emptyState = document.querySelector('.empty-state');
+        if (emptyState && document.querySelectorAll('.event-item').length > 0) {
+            emptyState.remove();
+        }
+    };
+    
+    socket.onclose = function() {
+        console.log('WebSocket connection closed');
+        document.getElementById('connectionStatus').textContent = 'Desconectado';
+        document.getElementById('connectionDot').classList.remove('connected');
+        document.getElementById('connectionDot').classList.add('disconnected');
+        
+        // Attempt to reconnect
+        if (reconnectAttempts < maxReconnectAttempts) {
+            reconnectAttempts++;
+            setTimeout(connectWebSocket, reconnectInterval);
+            console.log(`Attempting to reconnect (${reconnectAttempts}/${maxReconnectAttempts})...`);
+        }
+    };
+    
+    socket.onerror = function(error) {
+        console.error('WebSocket error:', error);
+    };
+    
+    socket.onmessage = function(event) {
+        handleWebSocketMessage(event.data);
+    };
+}
+
+function handleWebSocketMessage(message) {
+    try {
+        // Parse the message as JSON
+        const data = JSON.parse(message);
+        
+        // Handle different message types
+        if (data.type === 'performance') {
+            // Update performance charts
+            if (data.cpu !== undefined) updateChart(cpuChart, cpuData, data.cpu);
+            if (data.memory !== undefined) updateChart(memoryChart, memoryData, data.memory);
+            if (data.processes !== undefined) updateChart(processesChart, processesData, data.processes);
+            if (data.responseTime !== undefined) updateChart(responseTimeChart, responseTimeData, data.responseTime);
+            return;
+        }
+        
+        // For other message types, add to event list
+        const messageType = data.type || 'info';
+        const messageContent = data.message || 'No message content';
+        const timestamp = data.timestamp ? new Date(data.timestamp) : new Date();
+        
+        // Add responseTime to chart if available
+        if (data.responseTime) {
+            updateChart(responseTimeChart, responseTimeData, parseFloat(data.responseTime));
+        }
+        
+        addEventToList(messageContent, messageType, timestamp);
+        
+    } catch (e) {
+        // If parsing fails, handle as plain text
+        console.error('Error parsing message:', e);
+        addEventToList(message.toString(), 'info', new Date());
+    }
+}
+
+function getEventIcon(type) {
+    switch (type) {
+        case 'login':
+            return '<i class="fas fa-sign-in-alt event-icon login"></i>';
+        case 'logout':
+            return '<i class="fas fa-sign-out-alt event-icon logout"></i>';
+        case 'error':
+        case 'failed_login':
+        case 'query_error':
+            return '<i class="fas fa-exclamation-triangle event-icon error"></i>';
+        case 'ws_connection':
+            return '<i class="fas fa-plug event-icon ws_connection"></i>';
+        default:
+            return '<i class="fas fa-info-circle event-icon info"></i>';
+    }
+}
+
+function formatTimestamp(timestamp) {
+    return timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+}
+
+function addEventToList(message, type = 'info', timestamp = new Date()) {
+    const eventsContainer = document.getElementById('eventsContainer');
+    
+    // Remove empty state if it exists
+    const emptyState = document.querySelector('.empty-state');
+    if (emptyState) {
+        emptyState.remove();
+    }
+    
+    const eventItem = document.createElement('div');
+    eventItem.className = `event-item ${type}`;
+    eventItem.dataset.type = type;
+    
+    const icon = getEventIcon(type);
+    const formattedTime = formatTimestamp(timestamp);
+    
+    eventItem.innerHTML = `
+        ${icon}
+        <div class="event-content">${message}</div>
+        <div class="event-timestamp">${formattedTime}</div>
+    `;
+    
+    eventsContainer.prepend(eventItem);
+    
+    // Limit the number of events shown
+    if (eventsContainer.children.length > 100) {
+        eventsContainer.removeChild(eventsContainer.lastChild);
+    }
+}
+
+function clearEvents() {
+    const eventsContainer = document.getElementById('eventsContainer');
+    eventsContainer.innerHTML = `
+        <div class="empty-state">
+            <i class="fas fa-stream"></i>
+            <p>No hay eventos para mostrar</p>
+        </div>
+    `;
+}
+
+// Tab switching functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize charts
+    initCharts();
+    
+    // Connect to WebSocket
+    connectWebSocket();
+    
+    // Tab switching
+    const tabs = document.querySelectorAll('.tab');
+    const eventsContainer = document.getElementById('eventsContainer');
+    const performanceCharts = document.getElementById('performanceCharts');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Remove active class from all tabs
+            tabs.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked tab
+            this.classList.add('active');
+            
+            const tabName = this.getAttribute('data-tab');
+            
+            // Show/hide appropriate content
+            if (tabName === 'rendimiento') {
+                eventsContainer.style.display = 'none';
+                performanceCharts.style.display = 'grid';
+            } else {
+                eventsContainer.style.display = 'block';
+                performanceCharts.style.display = 'none';
+                
+                // Filter events based on tab
+                const events = document.querySelectorAll('.event-item');
+                events.forEach(event => {
+                    const eventType = event.dataset.type;
+                    
+                    if (tabName === 'todos') {
+                        event.style.display = 'flex';
+                    } else if (tabName === eventType) {
+                        event.style.display = 'flex';
+                    } else {
+                        event.style.display = 'none';
+                    }
+                });
+            }
+        });
+    });
+    
+    // Reconnect button
+    document.getElementById('reconnectBtn').addEventListener('click', function() {
+        if (socket) {
+            socket.close();
+        }
+        reconnectAttempts = 0;
+        connectWebSocket();
+    });
+    
+    // Clear button
+    document.getElementById('clearBtn').addEventListener('click', function() {
+        clearEvents();
+    });
+});
+</script>
+</body>
+</html>

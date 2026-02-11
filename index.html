@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bit por Bit - Formación de estudiantes</title>
+    <!-- GSAP from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="/static/img/owl.png">
+    <link rel="stylesheet" href="/static/css/index.css">
+</head>
+
+<body>
+    <!-- Fixed Navbar -->
+    <div class="navbar">
+        <a href="index.html" class="logo" id="logo-link">
+            <div class="logo-letter">B</div>
+            <div class="logo-letter">X</div>
+            <div class="logo-letter">B</div>
+        </a>
+
+        <div class="nav-links">
+            <a href="index.html" id="home-link" class="active">Inicio</a>
+            <a href="courses.html" id="cursos-link">Cursos</a>
+            <a href="about.html" id="about-link">Sobre Nosotros</a>
+        </div>
+
+        <a href="login.html" class="login-btn">Iniciar Sesión</a>
+
+        <button class="menu-button" id="menu-btn">☰</button>
+    </div>
+
+    <!-- Pages Container -->
+    <div class="pages-container">
+        <!-- Home Page -->
+        <div id="home-page" class="page active">
+            <div class="home-container">
+                <!-- Left Content -->
+                <div class="content-left">
+                    <h1 class="hero-title">Bienvenido a Bit por Bit</h1>
+                    <p class="hero-description">Encargados de la formación de estudiantes. Bit por Bit garantiza que
+                        cada estudiante aprenda el lenguaje de su preferencia.</p>
+                    <button class="contact-btn">Contáctanos</button>
+
+                    <!-- Social Icons -->
+                    <div class="social-icons">
+                        <div class="social-icon">
+                            <a href="https://www.facebook.com/people/Bit-Bit/pfbid0obc1GL5xQBxVNUsykteJQynm9gf5bkeoo3qpW2DrgseqowSpPUyuY473SygLukFfl/"
+                                target="_blank">
+                                <img width="24px" height="24px" src="/static/img/facebook.png" alt="facebook">
+                            </a>
+
+                        </div>
+                        <div class="social-icon">
+                            <img width="24px" height="24px" src="/static/img/github.png" alt="github">
+                        </div>
+                        <div class="social-icon">
+                            <img width="24px" height="24px" src="/static/img/instagram.png" alt="instagram">
+                        </div>
+                        <div class="social-icon">
+                            <img width="24px" height="24px" src="/static/img/whatsapp.png" alt="whatsapp">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Content - Image/Video Container -->
+                <div class="content-right">
+                    <div class="media-container">
+                        <video id="home-video" muted>
+                            <source src="/static/img/video1.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer
+        style="background-color: #f8f9fa; padding: 20px 0; border-top: 1px solid #e9ecef; font-family: Arial, sans-serif; font-size: 14px; color: #6c757d; margin-top: 40px;">
+        <div
+            style="max-width: 1200px; margin: 0 auto; padding: 0 15px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
+            <div style="margin-bottom: 10px;">
+                <p style="margin: 0;">©Todos los derechos reservados bit por bit</p>
+                <p style="margin: 5px 0 0 0;">Bit x Bit S.A. de C.V</p>
+            </div>
+            <div style="margin-bottom: 10px;">
+                <p style="margin: 0;">
+                    <a href="https://www.flaticon.com/free-icons/owl" title="owl icons"
+                        style="color: #6c757d; text-decoration: none;">Owl icons created by Laisa Islam Ani -
+                        Flaticon</a>
+                </p>
+            </div>
+            <div style="margin-bottom: 10px; text-align: right;">
+                <p style="margin: 0;">Contacto: info@bitxbit.mx</p>
+                <p style="margin: 5px 0 0 0;">Tel: +52 (55) 1234-5678</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- JavaScript for animations and functionality -->
+    <script src="/static/js/index.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Specific home page initialization
+            animateHomePage();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Error</title>
+    <link rel="icon" type="image/x-icon" href="/static/img/owl.png">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;  /* Prevents scrollbars */
+        }
+
+        .back-home {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #333;  /* Button background color */
+            color: white;            /* Button text color */
+            text-decoration: none;   /* Removes underline from link */
+            border-radius: 6px;      /* Rounded corners */
+            font-weight: bold;
+            margin-top: 400px;        /* Space above the button */
+            transition: all 0.3s ease;  /* Smooth transition for hover effects */
+            font-size: 16px;
+            transform: translateX(8px);
+        }
+
+        /* Button hover effect */
+        .back-home:hover {
+            background-color: #555;  /* Slightly lighter on hover */
+            transform: translateY(-2px);  /* Slight upward movement */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Shadow on hover */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            /*overflow: hidden;  /* Prevents scrollbars */
+        }
+
+        .content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;  /* Ensures content is above background */
+        }
+
+
+        .background-container {
+            position: relative;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .background-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;  /* This maintains aspect ratio while covering container */
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* Container for your content */
+        
+        /* For tablets */
+        @media (max-width: 768px) {
+            .back-home {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+            
+            /* Adjust any text sizes as needed */
+            .error-code {
+                font-size: 80px;  /* Example: make 404 text smaller on tablets */
+            }
+        }
+
+        /* For mobile phones */
+        @media (max-width: 480px) {
+            .back-home {
+                padding: 8px 16px;
+                font-size: 12px;
+            }
+            
+            .error-code {
+                font-size: 60px;  /* Even smaller on phones */
+            }
+            
+            /* You might need additional adjustments for very small screens */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-container">
+        <img src="/static/img/404.png" alt="Background 404 Error" class="background-image">
+
+        <div class="content">
+            <a href="/" class="back-home">Back to Home</a>
+
+        </div>
+    </div>
+</body>
+</html>
