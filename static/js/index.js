@@ -401,7 +401,7 @@ function initCourseDetails() {
             title: "Python",
             level: "Principiante",
             description: "Este curso ofrece las bases necesarias de python",
-            logo: "/static/img/phyton.png",
+            logo: "static/img/phyton.png",
             duration: "3 horas",
             modules: "5 módulos",
             projects: "2 proyectos"
@@ -410,7 +410,7 @@ function initCourseDetails() {
             title: "Java",
             level: "Principiante",
             description: "Aprende la programación orientada a objetos con Java",
-            logo: "/static/img/java.png",
+            logo: "static/img/java.png",
             duration: "4 horas",
             modules: "6 módulos",
             projects: "3 proyectos"
@@ -419,7 +419,7 @@ function initCourseDetails() {
             title: "JavaScript",
             level: "Intermedio",
             description: "Desarrolla aplicaciones web interactivas con JavaScript",
-            logo: "/static/img/javascript.png",
+            logo: "static/img/javascript.png",
             duration: "3.5 horas",
             modules: "5 módulos",
             projects: "2 proyectos"
@@ -428,7 +428,7 @@ function initCourseDetails() {
             title: "Go",
             level: "Avanzado",
             description: "Aprende a desarrollar aplicaciones con Go rápidas y eficientes",
-            logo: "/static/img/go.png",
+            logo: "static/img/go.png",
             duration: "5 horas",
             modules: "8 módulos",
             projects: "4 proyectos"
@@ -437,7 +437,7 @@ function initCourseDetails() {
             title: "HTML",
             level: "Principiante",
             description: "Aprende a crear estructura para sitios web con HTML",
-            logo: "/static/img/html.png",
+            logo: "static/img/html.png",
             duration: "2 horas",
             modules: "4 módulos",
             projects: "2 proyectos"
@@ -446,7 +446,7 @@ function initCourseDetails() {
             title: "CSS",
             level: "Intermedio",
             description: "Estiliza tus sitios web con las últimas técnicas de CSS",
-            logo: "/static/img/css.png",
+            logo: "static/img/css.png",
             duration: "3 horas",
             modules: "5 módulos",
             projects: "3 proyectos"
@@ -455,7 +455,7 @@ function initCourseDetails() {
             title: "SQL",
             level: "Todos los niveles",
             description: "Domina las bases de datos relacionales con SQL",
-            logo: "/static/img/sql.png",
+            logo: "static/img/sql.png",
             duration: "4 horas",
             modules: "6 módulos",
             projects: "3 proyectos"
@@ -464,7 +464,7 @@ function initCourseDetails() {
             title: "React",
             level: "Intermedio",
             description: "Crea interfaces modernas con la biblioteca React",
-            logo: "/static/img/react.png",
+            logo: "static/img/react.png",
             duration: "4.5 horas",
             modules: "7 módulos",
             projects: "3 proyectos"
